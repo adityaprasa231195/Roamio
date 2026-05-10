@@ -53,10 +53,13 @@ export async function createTrip(req, res) {
         shareToken: uuidv4(),
       },
     });
+    console.log('✅ Trip created successfully:', trip.id);
     res.status(201).json({ trip });
   } catch (err) {
-    console.error('Trip creation error:', err);
-    res.status(500).json({ error: 'Failed to create trip: ' + err.message });
+    console.error('❌ TRIP CREATION FATAL ERROR:', err);
+    res.status(500).json({ 
+      error: `Failed to create trip: ${err.message}. (User: ${req.user?.uid || 'Unknown'})` 
+    });
   }
 }
 
