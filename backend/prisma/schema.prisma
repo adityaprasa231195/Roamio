@@ -1,122 +1,100 @@
-// Prisma schema for Traveloop
-// SQLite for local dev — swap DATABASE_URL to PostgreSQL for production
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model User {
-  id        String   @id // Firebase UID
+  id        String   @id @default(cuid())
   email     String   @unique
   name      String?
   avatar    String?
   createdAt DateTime @default(now())
-
-  trips    Trip[]
-  @@map("users")
+  trips     Trip[]
 }
 
 model Trip {
-  id          String   @id @default(uuid())
+  id          String    @id @default(cuid())
   userId      String
+  user        User      @relation(fields: [userId], references: [id])
   name        String
   description String?
   coverImage  String?
   startDate   DateTime?
   endDate     DateTime?
-  totalBudget Float    @default(0)
-  currency    String   @default("USD")
-  isPublic    Boolean  @default(false)
-  shareToken  String?  @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  stops     Stop[]
-  expenses  Expense[]
-  packing   PackingItem[]
-  notes     TripNote[]
-
-  @@map("trips")
+  totalBudget Float     @default(0)
+  currency    String    @default("USD")
+  isPublic    Boolean   @default(false)
+  shareToken  String?   @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  stops       Stop[]
+  expenses    Expense[]
+  packing     PackingItem[]
+  notes       TripNote[]
 }
 
 model Stop {
-  id            String   @id @default(uuid())
+  id            String     @id @default(cuid())
   tripId        String
+  trip          Trip       @relation(fields: [tripId], references: [id], onDelete: Cascade)
   cityName      String
   country       String?
   latitude      Float?
   longitude     Float?
   arrivalDate   DateTime?
   departureDate DateTime?
-  stopOrder     Int      @default(0)
+  stopOrder     Int        @default(0)
   notes         String?
-
-  trip       Trip       @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  activities Activity[]
-  tripNotes  TripNote[]
-
-  @@map("stops")
+  createdAt     DateTime   @default(now())
+  activities    Activity[]
+  tripNotes     TripNote[]
 }
 
 model Activity {
-  id            String   @id @default(uuid())
+  id            String   @id @default(cuid())
   stopId        String
+  stop          Stop     @relation(fields: [stopId], references: [id], onDelete: Cascade)
   name          String
-  category      String   @default("sightseeing") // sightseeing|food|adventure|culture|shopping|transport
+  category      String?
   estimatedCost Float    @default(0)
   durationHours Float    @default(1)
   startTime     String?
   description   String?
   imageUrl      String?
   isAiSuggested Boolean  @default(false)
-
-  stop Stop @relation(fields: [stopId], references: [id], onDelete: Cascade)
-
-  @@map("activities")
+  createdAt     DateTime @default(now())
 }
 
 model Expense {
-  id       String   @id @default(uuid())
+  id       String   @id @default(cuid())
   tripId   String
-  category String   @default("other") // transport|stay|food|activity|other
+  trip     Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  category String
   amount   Float
-  label    String
+  label    String?
   date     DateTime @default(now())
-  currency String   @default("USD")
-
-  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
-
-  @@map("expenses")
 }
 
 model PackingItem {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   tripId    String
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
   name      String
-  category  String   @default("essentials") // clothing|documents|electronics|essentials|other
+  category  String?
   isPacked  Boolean  @default(false)
   createdAt DateTime @default(now())
-
-  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
-
-  @@map("packing_items")
 }
 
 model TripNote {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   tripId    String
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
   stopId    String?
+  stop      Stop?    @relation(fields: [stopId], references: [id], onDelete: SetNull)
   content   String
   createdAt DateTime @default(now())
-
-  trip Trip  @relation(fields: [tripId], references: [id], onDelete: Cascade)
-  stop Stop? @relation(fields: [stopId], references: [id], onDelete: SetNull)
-
-  @@map("trip_notes")
 }
