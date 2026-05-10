@@ -9,10 +9,22 @@ import tripRoutes from './routes/trips.js';
 import stopRoutes from './routes/stops.js';
 import featureRoutes from './routes/features.js';
 import aiRoutes from './routes/ai.js';
+import { execSync } from 'child_process';
 import { prisma } from './lib/prisma.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// ─── Database Initialization ─────────────────────────────────────
+if (process.env.RENDER || process.env.VERCEL) {
+  try {
+    console.log('📦 Initializing cloud database...');
+    execSync('npm run db-setup', { stdio: 'inherit' });
+    console.log('✅ Database initialized successfully');
+  } catch (err) {
+    console.error('❌ Database initialization failed:', err.message);
+  }
+}
 
 app.use(cors());
 app.use(express.json());
@@ -52,10 +64,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL || !process.env.RENDER) {
-  app.listen(PORT, () => {
-    console.log(`\n🌍 Roamio API running on http://localhost:${PORT}`);
-  });
-}
+app.listen(PORT, () => {
+  console.log(`\n🌍 Roamio API running on port ${PORT}`);
+  console.log(`📡 Health check: http://localhost:${PORT}/api/health`);
+});
 
 export default app;
