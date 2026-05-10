@@ -40,6 +40,12 @@ export async function createTrip(req, res) {
       }
     });
 
+    console.log('🚀 CREATE TRIP REQUEST:', { userId: req.user?.uid, body: req.body });
+    
+    if (!req.user?.uid) {
+      throw new Error('Authentication failed: No User ID found in request');
+    }
+
     const trip = await prisma.trip.create({
       data: {
         userId: req.user.uid,
@@ -58,7 +64,7 @@ export async function createTrip(req, res) {
   } catch (err) {
     console.error('❌ TRIP CREATION FATAL ERROR:', err);
     res.status(500).json({ 
-      error: `Failed to create trip: ${err.message}. (User: ${req.user?.uid || 'Unknown'})` 
+      error: `DB Error: ${err.message.substring(0, 50)}... (UID: ${req.user?.uid || 'NONE'})` 
     });
   }
 }

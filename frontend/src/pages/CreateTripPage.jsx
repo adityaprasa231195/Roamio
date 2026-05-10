@@ -133,8 +133,10 @@ export default function CreateTripPage() {
       navigate(`/trips/${data.trip.id}`);
     } catch (err) {
       console.error('Trip creation error:', err);
-      const msg = err.response?.data?.error || 'Failed to create trip. Please try again.';
-      toast.error(msg);
+      const status = err.response?.status;
+      const serverMsg = err.response?.data?.error;
+      const msg = serverMsg || (status ? `Server Error (${status})` : 'Network Error or Timeout');
+      toast.error(`Error: ${msg}`, { duration: 5000 });
       setGenerating(false);
     }
   };
