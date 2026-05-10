@@ -85,8 +85,10 @@ async function main() {
     { ...cities.find(c => c.name === 'Rome'), arrival: '2025-07-18', departure: '2025-07-23' },
   ];
 
-  const europeTrip = await prisma.trip.create({
-    data: {
+  const europeTrip = await prisma.trip.upsert({
+    where: { id: 'trip-europe-2025' },
+    update: {},
+    create: {
       id: 'trip-europe-2025',
       userId: demoUser.id,
       name: 'Europe Summer 2025',
@@ -168,8 +170,10 @@ async function main() {
     { ...cities.find(c => c.name === 'Osaka'), arrival: '2025-10-12', departure: '2025-10-15' },
   ];
 
-  const japanTrip = await prisma.trip.create({
-    data: {
+  const japanTrip = await prisma.trip.upsert({
+    where: { id: 'trip-japan-2025' },
+    update: {},
+    create: {
       id: 'trip-japan-2025',
       userId: demoUser.id,
       name: 'Japan Adventure',
@@ -210,8 +214,10 @@ async function main() {
 
   // ─── Trip 3: Bali Escape ─────────────────────────────────────────
   const baliStop = cities.find(c => c.name === 'Bali');
-  const baliTrip = await prisma.trip.create({
-    data: {
+  const baliTrip = await prisma.trip.upsert({
+    where: { id: 'trip-bali-2025' },
+    update: {},
+    create: {
       id: 'trip-bali-2025',
       userId: demoUser.id,
       name: 'Bali Escape',
