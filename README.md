@@ -1,11 +1,9 @@
 # 🌍 Roamio — Your AI-Powered Travel Architect
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://roamio-eju3.onrender.com/auth)
+[Live Demo](https://roamio-eju3.onrender.com/auth)
+*Experience the future of travel planning instantly.*
 
 **Roamio** is a state-of-the-art travel planning application that transforms the way you explore the world. By combining the power of **Groq Llama 3.3 AI** with real-time geocoding and a sleek, premium interface, Roamio turns vague travel ideas into detailed, actionable itineraries.
-
-### 🔗 [Live Demo](https://roamio-eju3.onrender.com/auth)
-*Experience the future of travel planning instantly.*
 
 ---
 
@@ -65,8 +63,9 @@ npm start     # Start the unified server
 ```
 
 ---
+## 👥 Team
+Built at Odoo Hackathon by [SignalZero]
+---
 
 ## 🌍 License
 This project is licensed under the **MIT License**.
-
-Built with ❤️ by [Aditya Prasad](https://github.com/adityaprasa231195)
