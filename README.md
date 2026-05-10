@@ -1,43 +1,45 @@
-# Roamio — Plan Smarter. Travel Better.
+# 🌍 Roamio
+> Roam further. Plan smarter.
 
-Roamio is an AI-powered travel planning application that helps you create curated itineraries, manage budgets, and explore the world with ease.
+Roamio is a personalized AI-powered travel planning platform. Build multi-city itineraries,
+track your budget, manage your packing list, and share cinematic trip pages with the world.
+Dark. Fast. Beautiful. Built in 8 hours.
 
-## ✨ Key Features
-- **AI Itinerary Generation**: Powered by Groq (Llama 3.3) for fast, real-world suggestions.
-- **Dynamic Map Pins**: Automatic geocoding for any city in the world using Nominatim.
-- **Multi-Currency Support**: Automatic currency detection and conversion based on your destination.
-- **Interactive Itinerary Builder**: Drag-and-drop stops and activities.
-- **Budget Tracking**: Manage your travel expenses in local and base currencies.
-- **Dual Auth Mode**: Seamless Firebase Google/Email login + a dedicated Guest Mode for quick testing.
+## ✨ Features
+- 🗺️ Interactive itinerary builder with dark-themed map view
+- 🤖 AI-powered activity suggestions & budget advice (Claude)
+- 💰 Visual budget breakdowns with over-spend alerts
+- 🧳 Smart packing checklist with progress ring
+- 🔗 One-click cinematic public trip sharing
+- 🔐 Firebase Auth (Email + Google Sign-In)
+- 📱 Fully mobile responsive
+
+## 🎨 Design
+Obsidian & Champagne — dark luxury aesthetic.
+Fonts: Cormorant Garamond (display) · Outfit (UI) · DM Mono (numbers)
+Colors: #080810 base · #D4AF6A gold · #F2EDE4 ivory
 
 ## 🚀 Tech Stack
-- **Frontend**: React, Vite, Framer Motion, Leaflet, Lucide.
-- **Backend**: Node.js, Express, Prisma (SQLite), Groq SDK.
-- **Auth**: Firebase Authentication.
+React · Vite · TailwindCSS · Framer Motion · Node.js · Express · PostgreSQL · Prisma
+Firebase Auth · Anthropic Claude API · Leaflet.js · Recharts
 
-## 🛠 Setup & Installation
+## 🏃 Quick Start
+\`\`\`bash
+# Backend
+cd backend && cp .env.example .env  # fill in values
+npm install && npx prisma migrate dev && npm run seed && npm start
 
-### Backend
-1. Navigate to `backend/`
-2. Run `npm install`
-3. Create a `.env` file based on `.env.example`:
-   ```env
-   DATABASE_URL="file:./dev.db"
-   GROQ_API_KEY=your_key_here
-   DEV_AUTH_BYPASS=true
-   ```
-4. Run `npx prisma migrate dev --name init`
-5. Run `npm run dev`
+# Frontend
+cd frontend && cp .env.example .env  # fill in Firebase + API URL
+npm install && npm run dev
+\`\`\`
 
-### Frontend
-1. Navigate to `frontend/`
-2. Run `npm install`
-3. Create a `.env` file:
-   ```env
-   VITE_API_URL=http://localhost:3001
-   VITE_DEV_AUTH=true
-   ```
-4. Run `npm run dev`
+## 🔑 Demo Account
+Email: demo@roamio.app | Password: demo1234
+(Includes 3 pre-loaded trips: Europe Backpacker · Japan 10 Days · Goa Weekend)
 
-## 🌍 License
+## 👥 Team
+Built at Odoo Hackathon by [Team Name]
+
+## 📄 License
 MIT
