@@ -21,6 +21,18 @@ app.use('/api', stopRoutes);
 app.use('/api', featureRoutes);
 app.use('/api/ai', aiRoutes);
 
+// ─── Static files for Frontend ──────────────────────────────────
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Handle SPA routing: serve index.html for all non-api routes
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) return next();
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
 // ─── Health check ────────────────────────────────────────────────
 app.get('/api/health', (_, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
 
