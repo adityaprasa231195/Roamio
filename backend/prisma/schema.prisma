@@ -1,0 +1,122 @@
+// Prisma schema for Traveloop
+// SQLite for local dev — swap DATABASE_URL to PostgreSQL for production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id // Firebase UID
+  email     String   @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime @default(now())
+
+  trips    Trip[]
+  @@map("users")
+}
+
+model Trip {
+  id          String   @id @default(uuid())
+  userId      String
+  name        String
+  description String?
+  coverImage  String?
+  startDate   DateTime?
+  endDate     DateTime?
+  totalBudget Float    @default(0)
+  currency    String   @default("USD")
+  isPublic    Boolean  @default(false)
+  shareToken  String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stops     Stop[]
+  expenses  Expense[]
+  packing   PackingItem[]
+  notes     TripNote[]
+
+  @@map("trips")
+}
+
+model Stop {
+  id            String   @id @default(uuid())
+  tripId        String
+  cityName      String
+  country       String?
+  latitude      Float?
+  longitude     Float?
+  arrivalDate   DateTime?
+  departureDate DateTime?
+  stopOrder     Int      @default(0)
+  notes         String?
+
+  trip       Trip       @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  activities Activity[]
+  tripNotes  TripNote[]
+
+  @@map("stops")
+}
+
+model Activity {
+  id            String   @id @default(uuid())
+  stopId        String
+  name          String
+  category      String   @default("sightseeing") // sightseeing|food|adventure|culture|shopping|transport
+  estimatedCost Float    @default(0)
+  durationHours Float    @default(1)
+  startTime     String?
+  description   String?
+  imageUrl      String?
+  isAiSuggested Boolean  @default(false)
+
+  stop Stop @relation(fields: [stopId], references: [id], onDelete: Cascade)
+
+  @@map("activities")
+}
+
+model Expense {
+  id       String   @id @default(uuid())
+  tripId   String
+  category String   @default("other") // transport|stay|food|activity|other
+  amount   Float
+  label    String
+  date     DateTime @default(now())
+  currency String   @default("USD")
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@map("expenses")
+}
+
+model PackingItem {
+  id        String   @id @default(uuid())
+  tripId    String
+  name      String
+  category  String   @default("essentials") // clothing|documents|electronics|essentials|other
+  isPacked  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  trip Trip @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  @@map("packing_items")
+}
+
+model TripNote {
+  id        String   @id @default(uuid())
+  tripId    String
+  stopId    String?
+  content   String
+  createdAt DateTime @default(now())
+
+  trip Trip  @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  stop Stop? @relation(fields: [stopId], references: [id], onDelete: SetNull)
+
+  @@map("trip_notes")
+}
