@@ -1,45 +1,72 @@
-# 🌍 Roamio
-> Roam further. Plan smarter.
+# 🌍 Roamio — Your AI-Powered Travel Architect
 
-Roamio is a personalized AI-powered travel planning platform. Build multi-city itineraries,
-track your budget, manage your packing list, and share cinematic trip pages with the world.
-Dark. Fast. Beautiful. Built in 8 hours.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://roamio-eju3.onrender.com/auth)
 
-## ✨ Features
-- 🗺️ Interactive itinerary builder with dark-themed map view
-- 🤖 AI-powered activity suggestions & budget advice (Claude)
-- 💰 Visual budget breakdowns with over-spend alerts
-- 🧳 Smart packing checklist with progress ring
-- 🔗 One-click cinematic public trip sharing
-- 🔐 Firebase Auth (Email + Google Sign-In)
-- 📱 Fully mobile responsive
+**Roamio** is a state-of-the-art travel planning application that transforms the way you explore the world. By combining the power of **Groq Llama 3.3 AI** with real-time geocoding and a sleek, premium interface, Roamio turns vague travel ideas into detailed, actionable itineraries.
 
-## 🎨 Design
-Obsidian & Champagne — dark luxury aesthetic.
-Fonts: Cormorant Garamond (display) · Outfit (UI) · DM Mono (numbers)
-Colors: #080810 base · #D4AF6A gold · #F2EDE4 ivory
+### 🔗 [Live Demo](https://roamio-eju3.onrender.com/auth)
+*Experience the future of travel planning instantly.*
 
-## 🚀 Tech Stack
-React · Vite · TailwindCSS · Framer Motion · Node.js · Express · PostgreSQL · Prisma
-Firebase Auth · Anthropic Claude API · Leaflet.js · Recharts
+---
 
-## 🏃 Quick Start
-\`\`\`bash
-# Backend
-cd backend && cp .env.example .env  # fill in values
-npm install && npx prisma migrate dev && npm run seed && npm start
+## ✨ Key Features
 
-# Frontend
-cd frontend && cp .env.example .env  # fill in Firebase + API URL
-npm install && npm run dev
-\`\`\`
+### 🤖 Intelligent Itineraries
+- **AI-Generated Suggestions**: Get hyper-localized activity recommendations powered by the world's fastest AI (Groq Llama 3.3).
+- **Smart Fallbacks**: Curated suggestions for 50+ major global cities when offline or in restricted environments.
 
-## 🔑 Demo Account
-Email: demo@roamio.app | Password: demo1234
-(Includes 3 pre-loaded trips: Europe Backpacker · Japan 10 Days · Goa Weekend)
+### 📍 Precision Mapping
+- **Auto-Geocoding**: Every city you type is instantly mapped using the **Nominatim (OpenStreetMap)** API—no more missing map pins.
+- **Interactive Map Builder**: Visualize your journey with beautiful Leaflet-powered map visualizations.
 
-## 👥 Team
-Built at Odoo Hackathon by [Team Name]
+### 💰 Financial Intelligence
+- **Dynamic Localization**: Automatically detects and switches to local currencies (PKR, EUR, JPY, etc.) based on your destination.
+- **Budget Tracking**: Real-time expense monitoring and budget breakdown by category (Transport, Food, Stay).
 
-## 📄 License
-MIT
+### 🔐 Modern Authentication
+- **Dual-Mode Login**: Seamlessly transition between **Google/Email (Firebase)** and a fast **Guest Mode** for quick experimentation.
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- **Framework**: React 19 + Vite
+- **Animations**: Framer Motion
+- **Icons/UI**: Lucide React + Custom CSS (Premium Glassmorphism)
+- **State Management**: Zustand
+
+### Backend
+- **Server**: Node.js + Express
+- **Database**: Prisma ORM (SQLite for edge/dev)
+- **AI Orchestration**: Groq SDK + Llama 3.3 70B
+- **Deployment**: Render Monorepo Orchestration
+
+---
+
+## 🚀 Quick Start (Local Development)
+
+### 1. Clone & Install
+```bash
+git clone https://github.com/adityaprasa231195/Roamio.git
+cd Roamio
+npm install # Root install
+```
+
+### 2. Configure Environment
+Create a `.env` in the root and subdirectories with your API keys:
+- `GROQ_API_KEY`: Get from [Groq Console](https://console.groq.com)
+- `FIREBASE_SERVICE_ACCOUNT`: Get from Firebase Settings
+
+### 3. Run
+```bash
+npm run build # Build both frontend and backend
+npm start     # Start the unified server
+```
+
+---
+
+## 🌍 License
+This project is licensed under the **MIT License**.
+
+Built with ❤️ by [Aditya Prasad](https://github.com/adityaprasa231195)
